@@ -1,0 +1,47 @@
+{% extends "./layout.html" %}
+
+{% load static %}
+
+{% block body %}
+     <div class="yellow_darkbg">
+        <div class="container">
+           <div class="row">
+              <div class="col-md-12">
+                 <div class="titlepage">
+                  <h2>Build Your Website, Let's Check Our Services</h2>
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>
+
+         <!-- services -->
+         <div  class="services">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-4">
+                     <div id="serv_hover"  class="services_box">
+                        <i><img src="{% static 'images/service1.png' %}" alt="#"/></i>
+                        <h3>Web Design</h3>
+                        <a class="right_irro" href="#"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div id="serv_hover" class="services_box">
+                        <i><img src="{% static 'images/service2.png' %}" alt="#"/></i>
+                        <h3>Data Analysis</h3>
+                        <a class="right_irro" href="#"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div id="serv_hover" class="services_box">
+                        <i><img src="{% static 'images/service3.png' %}" alt="#"/></i>
+                        <h3>Marketing Analysis</h3>
+                        <a class="right_irro" href="#"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- end services -->
+{% endblock %}
