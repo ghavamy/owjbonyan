@@ -26,6 +26,7 @@
       <!-- Tweaks for older IEs-->
       <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/videostyle.css' %}">
       <link href="https://vjs.zencdn.net/7.8.3/video-js.css" rel="stylesheet" />
       <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
   	   <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
@@ -89,6 +90,11 @@
                               <li class="nav-item d_none">
                                  <a class="nav-link" href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
                               </li>
+                              {% if user.is_authenticated %}
+                              <li class="nav-item">
+                                 <a class="nav-link" href="{% url 'profiles:profile' user.profile.pk %}"><img src="{{ profile.image.url}}" width="35" height="35" class="d-inline-block rounded-circle" alt="profile"></img></a>
+                              </li>
+                              {% endif %}
                            </ul>
                         </div>
                      </nav>
@@ -99,8 +105,8 @@
       </header>
       <!-- end header inner -->
       <!-- end header -->
-    {% block body %}
-    {% endblock %}
+      {% block body %}
+      {% endblock %}
 
       <!--  footer -->
       <footer>
@@ -179,5 +185,7 @@
       <script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
       <script src="https://vjs.zencdn.net/7.8.3/video.js"></script>
       <script src="{% static 'js/custom.js' %}"></script>
+      <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+      <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
    </body>
 </html>

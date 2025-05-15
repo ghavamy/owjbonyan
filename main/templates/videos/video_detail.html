@@ -46,6 +46,11 @@
 
 			</div>
 		</div>
+
+		{% if object.uploader == user %}
+			<a class="video-icons icon-color" href="{% url 'update_video' object.pk %}"><ion-icon name="pencil-outline"></ion-icon></a>
+			<a class="video-icons icon-color" href="{% url 'delete_video' object.pk %}"><ion-icon name="close-outline"></ion-icon></a>
+		{% endif %}
 	</div>
 
 {% endblock %}

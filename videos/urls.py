@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
-    path('', views.videoIndex, name='videoIndex'),
+    path('', views.Index.as_view(), name='videoIndex'),
     path('create/', views.CreateVideo.as_view(), name='create_video'),
     path('<int:pk>/', views.DetailVideo.as_view(), name='video_detail'),
     path('<int:pk>/update', views.UpdateVideo.as_view(), name='update_video'),

@@ -2,18 +2,25 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.views.generic.detail import DetailView
-
+from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+from django.views.generic import ListView
 from .models import Video
 
 # Create your views here.
-def videoIndex(request):
-    return render(request , 'videos/videoIndex.html')
+class Index(ListView):
+    model = Video
+    template_name = 'videos/videoindex.html'
+    order_by = ['-date-posted']
 
-class CreateVideo(CreateView):
+class CreateVideo(LoginRequiredMixin , CreateView):
     model = Video
     fields = ['title', 'description', 'video_file', 'thumbnail']
     template_name = 'videos/create_video.html'
 
+    def form_valid(self, form):
+        form.instance.uploader = self.request.user
+        return super().form_valid(form)
+    
     def get_success_url(self):
         return reverse('video_detail', kwargs={'pk': self.object.pk})
 
@@ -21,7 +28,7 @@ class DetailVideo(DetailView):
     model = Video
     template_name = 'videos/video_detail.html'
 
-class UpdateVideo(UpdateView):
+class UpdateVideo(LoginRequiredMixin , UserPassesTestMixin , UpdateView):
     model = Video
     fields = ['title', 'description']
     template_name = 'videos/create_video.html'
@@ -29,9 +36,18 @@ class UpdateVideo(UpdateView):
     def get_success_url(self):
         return reverse('video_detail', kwargs={'pk': self.object.pk})
     
-class DeleteVideo(DeleteView):
+    def test_func (self):
+        video = self.get_object()
+        return self.request.user == video.uploader
+
+    
+class DeleteVideo(LoginRequiredMixin , UserPassesTestMixin , DeleteView):
     model = Video
     template_name = 'videos/delete_video.html'
 
     def get_success_url(self):
         return reverse('videoIndex')
+    
+    def test_func (self):
+        video = self.get_object()
+        return self.request.user == video.uploader
