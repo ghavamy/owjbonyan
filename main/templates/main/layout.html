@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang = "fa">
+<html lang = "fa" dir="rtl">
    <head>
       <!-- basic -->
       <meta charset="utf-8">
@@ -15,6 +15,7 @@
       <meta name="author" content="">
       <!-- bootstrap css -->
       <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
       <!-- style css -->
       <link rel="stylesheet" href="{% static 'css/style.css' %}">
       <!-- Responsive-->
@@ -41,6 +42,18 @@
                   link.setAttribute("aria-current", "page");
                }
             });
+
+            var dropdown = document.querySelector('.nav-item.dropdown');
+            if (dropdown) {
+               dropdown.addEventListener('mouseenter', function() {
+                  this.classList.add('show');
+                  this.querySelector('.dropdown-menu').classList.add('show');
+               });
+               dropdown.addEventListener('mouseleave', function() {
+                  this.classList.remove('show');
+                  this.querySelector('.dropdown-menu').classList.remove('show');
+               });
+            }
          });
       </script>
    </head>
@@ -53,46 +66,57 @@
       <!-- header -->
       <header>
          <!-- header inner -->
-         <div class="header">
+         <div class="header" style="padding:0;">
             <div class="container">
-               <div class="row" dir="rtl">
-                  <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
+               <div class="row align-items-center">
+                  <!-- Logo column: order-1 on mobile, order-1 on desktop -->
+                  <div class="col-3 col-md-3 col-lg-3 col-xl-3 col logo_section order-1 order-md-1">
                      <div class="full">
-                        <div class="center-desk">
+                        <div class="center-desk text-left">
                            <div class="logo">
-                              <a href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}" alt="#"  width="100" height="100"/></a>
+                              <a href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}" alt="#" width="80" height="80"/></a>
                            </div>
                         </div>
                      </div>
                   </div>
-                  <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
-                     <nav class="navigation navbar navbar-expand-md navbar-dark ">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+                  <!-- Navigation column: order-2 on all screens -->
+                  <div class="col-9 col-md-9 col-lg-9 col-xl-9 order-2 order-md-2 d-flex align-items-center">
+                     <nav class="navigation navbar navbar-expand-md navbar-dark w-100">
+                        <button class="navbar-toggler float-right" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+                           <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarsExample04">
-                           <ul class="navbar-nav mr-auto" id="navid">
-                              <li class="nav-item">
-                                 <a class="nav-link" href="{% url 'home' %}">صفحه اصلی</a>
+                           <ul class="navbar-nav mr-auto ml-auto text-center w-100 align-items-center" id="navid" style="height:100%;">
+                              <li class="nav-item d-flex align-items-center">
+                                 <a class="nav-link text-center" href="{% url 'home' %}">صفحه اصلی</a>
                               </li>
-                              <li class="nav-item">
-                                 <a class="nav-link" href="{% url 'about' %}">درباره ما</a>
+                              <li class="nav-item d-flex align-items-center">
+                                 <a class="nav-link text-center" href="{% url 'about' %}">درباره ما</a>
                               </li>
-                              <li class="nav-item">
-                                 <a class="nav-link" href="{% url 'service' %}">خدمات</a>
+                              <li class="nav-item dropdown d-flex align-items-center">
+                                 <a class="nav-link dropdown-toggle text-center" href="#" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">خدمات</a>
+                                 <div class="dropdown-menu text-center" aria-labelledby="servicesDropdown">
+                                    <a class="dropdown-item text-center" href="{% url 'videoIndex' %}">ویدیو ها</a>
+                                    <a class="dropdown-item text-center" href="#">آموزش آنلاین</a>
+                                    <a class="dropdown-item text-center" href="#">آزمون</a>
+                                 </div>
                               </li>
-                              <li class="nav-item">
-                                 <a class="nav-link" href="{% url 'blog' %}">بلاگ</a>
+                              <li class="nav-item d-flex align-items-center">
+                                 <a class="nav-link text-center" href="{% url 'blog' %}">بلاگ</a>
                               </li>
-                              <li class="nav-item">
-                                 <a class="nav-link" href="{% url 'contact' %}">تماس با ما</a>
-                              </li>
-                              <li class="nav-item d_none">
-                                 <a class="nav-link" href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
+                              <li class="nav-item d-flex align-items-center">
+                                 <a class="nav-link text-center" href="{% url 'contact' %}">تماس با ما</a>
                               </li>
                               {% if user.is_authenticated %}
-                              <li class="nav-item">
-                                 <a class="nav-link" href="{% url 'profiles:profile' user.profile.pk %}"><img src="{{ profile.image.url}}" width="35" height="35" class="d-inline-block rounded-circle" alt="profile"></img></a>
+                              <li class="nav-item d-flex flex-column align-items-center">
+                                 <a class="nav-link text-center" href="{% url 'profiles:profile' user.profile.pk %}">
+                                    <img src="{{ user.profile.image.url }}" width="35" height="35" class="d-inline-block rounded-circle mx-auto" alt="profile">
+                                 </a>
+                                 <p class="text-center mb-0" style="color: beige;">{{ user.profile.name }}</p>
+                              </li>
+                              {% else %}
+                              <li class="nav-item d-flex align-items-center">
+                                 <a class="nav-link text-center" href="{% url 'account_login' %}">ورود/ثبت نام</a>
                               </li>
                               {% endif %}
                            </ul>

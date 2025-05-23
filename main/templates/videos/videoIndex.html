@@ -1,17 +1,15 @@
 {% extends '../main/layout.html'%}
+{% load static %}
 
 {% block body%}
-    <div class="container">
-        <div class="row justify-content-center">
-            {% for object in object_list %}
-                <div class="card col-md-3 col-sm-12 mr-md-2 mt-5 p-3 border-0">
-                    <a href="{% url 'video_detail' object.pk %}"><img src="/media/{{ object.thumbnail }}" width="256" height="144"></a>
-                    <div class="card-body">
-                        <a class="link-text" href="{% url 'video_detail' object.pk %}"><h5 class="text-center">{{ object.title }}</h5></a>
-                        <p class="text-muted tect-center m-0">{{ object.uploader }}</p>
-                        <p class="text-muted tect-center">{{ object.date_posted | date:"M d, Y" }}</p>
-                    </div>
-                </div>
+    <div class="container mt-5">
+        <form class="form-inline my-2 my-lg-0 d-flex flex-row flex-nowrap justify-content-center" method="GET" action="{% url 'search_video' %}">
+            <input class="form-control mr-sm-2" type="search" name="q" placeholder="جستجو" aria-label="Search" value="{{ request.GET.q }}">
+            <button class="search-button" type="submit"><ion-icon name="search-outline"></ion-icon></button>
+        </form>
+        <div class="d-flex flex-wrap justify-content-center mt-2" style="max-width: 600px; width: 100%; margin: 0 auto;">
+            {% for category in categories %}
+            <a href="{% url 'category_list' category.id %}" class="btn btn-outline-primary mx-1 my-1">{{ category.name }}</a>
             {% endfor %}
         </div>
     </div>
