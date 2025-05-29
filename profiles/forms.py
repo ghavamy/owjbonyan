@@ -6,11 +6,9 @@ class ProfileForm(forms.Form):
     location = forms.CharField(max_length=80, label='Location')
     image = forms.ImageField(label='Profile Image', required=False)
 
-    def clean(self):
-        self.cleaned_data = super().clean()
-        image = self.cleaned_data.get('image')
-        if not image:
-            self.cleaned_data['image'] = 'uploads/profile_pics/default.jpg'
+    class Meta:
+        model = Profile
+        fields = ['name', 'location', 'image']
     
     def signup(self, request, user):
         user.save()
@@ -18,5 +16,5 @@ class ProfileForm(forms.Form):
         profile.user = user
         profile.name = self.cleaned_data['name']
         profile.location = self.cleaned_data['location']
-        profile.image = self.cleaned_data['image']
+        profile.image = self.cleaned_data.get('image', 'uploads/profile_pics/default.jpg')
         profile.save()

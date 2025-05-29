@@ -114,6 +114,9 @@
                                  </a>
                                  <p class="text-center mb-0" style="color: beige;">{{ user.profile.name }}</p>
                               </li>
+                              <li class="nav-item d-flex align-items-center">
+                                 <a class="nav-link text-center" href="{% url 'account_logout' %}">خروج</a>
+                              </li>
                               {% else %}
                               <li class="nav-item d-flex align-items-center">
                                  <a class="nav-link text-center" href="{% url 'account_login' %}">ورود/ثبت نام</a>
