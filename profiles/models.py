@@ -9,5 +9,6 @@ class Profile(models.Model):
     location = models.CharField(max_length=100 , blank = True)
     image = models.ImageField(upload_to='uploads/profile_pics', blank = True, validators = [FileExtensionValidator(allowed_extensions = ['png', 'jpg', 'jpeg'])])
 
+
     def __str__(self):
         return f'{self.user.username} Profile'

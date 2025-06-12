@@ -253,7 +253,6 @@ button {
 
 
 /*-- navigation--*/
-
 .navigation.navbar {
      float: right;
      padding-top: 30px !important;
@@ -286,6 +285,32 @@ button {
      padding-right: 10px;
 }
 
+.navbar-toggler {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1049;
+}
+
+/*-- side navigation--*/
+.side-nav {
+    position: fixed;
+    top: 0;
+    right: -300px; /* Hide offscreen */
+    width: 250px;
+    height: 100vh;
+    background: #222;
+    transition: right 0.3s ease-in-out;
+    overflow-y: auto;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+    z-index: 1050; /* Make sure it's above other elements */
+}
+
+.side-nav.open {
+    right: 0;
+}
+/*-- end side navigation--*/
+
 .header {
      width: 100%;
      padding: 30px 30px;
@@ -315,19 +340,6 @@ button {
      align-content: center;
      align-items: center;
      position: relative;
-}
-
-.banner_main::before {
-     position: absolute;
-     bottom: -63px;
-     right: 17%;
-     content: "";
-     background: url(../images/button.png);
-     background-repeat: no-repeat;
-     width: 159px;
-     z-index: 9999;
-     height: 159px;
-     cursor: pointer;
 }
 
 .text-bg {
